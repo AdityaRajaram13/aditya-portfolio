@@ -55,6 +55,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  verification: {
+    google: "Ziem1AbP4rXw2c74Rxv6iofwsYzTLONRdva64bgbpwE",
+  },
 };
 
 // Person structured data (JSON-LD) for rich results.
