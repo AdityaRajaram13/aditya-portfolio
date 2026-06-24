@@ -21,27 +21,56 @@ export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
   description: profile.tagline,
   keywords: [
+    "Full-stack Developer",
     "Backend Developer",
     "Node.js",
     "TypeScript",
     "PostgreSQL",
     "GraphQL",
+    "Next.js",
     "Microservices",
     profile.name,
   ],
-  authors: [{ name: profile.name }],
+  authors: [{ name: profile.name, url: siteUrl }],
+  creator: profile.name,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
     description: profile.tagline,
     url: siteUrl,
     siteName: `${profile.name} · Portfolio`,
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} — ${profile.role}`,
     description: profile.tagline,
+    creator: profile.socials.twitter || undefined,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+};
+
+// Person structured data (JSON-LD) for rich results.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  email: `mailto:${profile.email}`,
+  url: siteUrl,
+  worksFor: { "@type": "Organization", name: profile.company },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: profile.location,
+  },
+  sameAs: [profile.socials.github, profile.socials.linkedin].filter(Boolean),
 };
 
 export default function RootLayout({
@@ -56,6 +85,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
