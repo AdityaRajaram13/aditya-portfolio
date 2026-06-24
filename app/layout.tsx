@@ -14,8 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// TODO: set this to your real deployed URL once you have one.
-const siteUrl = "https://your-domain.com";
+const siteUrl = profile.website;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

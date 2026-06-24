@@ -16,6 +16,7 @@ export const profile = {
   bio: `Full-stack engineer building Invocreto — a multi-location inventory and billing SaaS — end to end at Syntags. I own core services from the data model up: tax-accurate GST reporting, payment integrations, a relational catalog architecture, and the microservices behind it, plus the Next.js and Angular front-ends that sit on top. I care about correctness where it matters most (money, taxes, inventory) and pragmatic architecture over complexity for its own sake. Currently leading a small team into backend development.`,
   email: "aditya.rajaram13@gmail.com",
   phone: "+91 98206 51625",
+  website: "https://aditya-portfolio-nine-gamma.vercel.app",
   resumeUrl: "/resume", // in-site resume page (printable to PDF)
   socials: {
     github: "https://github.com/AdityaRajaram13",

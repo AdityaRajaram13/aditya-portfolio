@@ -1,29 +1,70 @@
 "use client";
 
 import Link from "next/link";
+import { profile, experiences, skillCategories } from "@/lib/content";
 import {
-  profile,
-  experiences,
-  skillCategories,
-} from "@/lib/content";
+  GithubIcon,
+  LinkedinIcon,
+  MailIcon,
+  PhoneIcon,
+} from "@/components/icons";
+
+function PinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" />
+    </svg>
+  );
+}
 
 export function ResumeDoc() {
+  const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "");
+
   const contacts = [
-    profile.email && { label: profile.email, href: `mailto:${profile.email}` },
+    profile.email && {
+      icon: <MailIcon />,
+      label: profile.email,
+      href: `mailto:${profile.email}`,
+    },
     profile.phone && {
+      icon: <PhoneIcon />,
       label: profile.phone,
       href: `tel:${profile.phone.replace(/[^+\d]/g, "")}`,
     },
+    profile.location && {
+      icon: <PinIcon />,
+      label: profile.location,
+      href: "",
+    },
+    profile.website && {
+      icon: <GlobeIcon />,
+      label: strip(profile.website),
+      href: profile.website,
+    },
     profile.socials.linkedin && {
-      label: profile.socials.linkedin.replace(/^https?:\/\/(www\.)?/, ""),
+      icon: <LinkedinIcon />,
+      label: strip(profile.socials.linkedin),
       href: profile.socials.linkedin,
     },
     profile.socials.github && {
-      label: profile.socials.github.replace(/^https?:\/\//, ""),
+      icon: <GithubIcon />,
+      label: strip(profile.socials.github),
       href: profile.socials.github,
     },
-    profile.location && { label: profile.location, href: "" },
-  ].filter(Boolean) as { label: string; href: string }[];
+  ].filter(Boolean) as {
+    icon: React.ReactNode;
+    label: string;
+    href: string;
+  }[];
 
   return (
     <div className="resume-page">
@@ -46,19 +87,35 @@ export function ResumeDoc() {
 
       <article className="resume-doc">
         {/* header */}
-        <header>
+        <header className="r-head">
           <h1>{profile.name}</h1>
-          <p style={{ fontSize: 15, fontWeight: 600, marginTop: 2 }}>
-            {profile.role}
-          </p>
-          <p className="muted" style={{ marginTop: 8, fontSize: 12.5 }}>
-            {contacts.map((c, i) => (
-              <span key={c.label}>
-                {i > 0 && <span style={{ margin: "0 8px" }}>·</span>}
-                {c.href ? <a href={c.href}>{c.label}</a> : c.label}
-              </span>
-            ))}
-          </p>
+          <p className="r-role">{profile.role}</p>
+          <div className="r-contact">
+            {contacts.map((c) => {
+              const external = c.href.startsWith("http");
+              const inner = (
+                <>
+                  {c.icon}
+                  <span>{c.label}</span>
+                </>
+              );
+              return c.href ? (
+                <a
+                  key={c.label}
+                  className="r-item"
+                  href={c.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                >
+                  {inner}
+                </a>
+              ) : (
+                <span key={c.label} className="r-item">
+                  {inner}
+                </span>
+              );
+            })}
+          </div>
         </header>
 
         {/* summary */}
@@ -73,40 +130,46 @@ export function ResumeDoc() {
           {experiences.map((exp, i) => (
             <div
               key={exp.role + exp.company + i}
-              style={{ marginBottom: 14, breakInside: "avoid" }}
+              style={{ marginBottom: 13, breakInside: "avoid" }}
             >
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "baseline",
                   gap: 12,
-                  flexWrap: "wrap",
                 }}
               >
                 <h3>
-                  {exp.role} — {exp.company}
+                  {exp.role} <span className="r-company">· {exp.company}</span>
                   {exp.product ? ` (${exp.product})` : ""}
                 </h3>
-                <span className="muted" style={{ fontSize: 12.5, whiteSpace: "nowrap" }}>
-                  {exp.period}
-                </span>
+                <span className="r-when">{exp.period}</span>
               </div>
-              <p className="muted" style={{ fontSize: 12, marginBottom: 4 }}>
-                {[exp.type, exp.location].filter(Boolean).join(" · ")}
+              <p className="r-meta">
+                {[exp.type, exp.duration, exp.location]
+                  .filter(Boolean)
+                  .join("  ·  ")}
               </p>
-              {exp.summary ? (
-                <p style={{ margin: "2px 0 4px" }}>{exp.summary}</p>
-              ) : null}
-              {exp.groups ? (
-                <ul>
-                  {exp.groups.flatMap((g) =>
-                    g.points.map((p, idx) => <li key={g.title + idx}>{p}</li>)
-                  )}
-                </ul>
-              ) : null}
+              {exp.summary ? <p>{exp.summary}</p> : null}
+
+              {exp.groups
+                ? exp.groups.map((g) => (
+                    <div key={g.title}>
+                      <p className="r-group">{g.title}</p>
+                      <ul>
+                        {g.points.map((p, idx) => (
+                          <li key={idx}>{p}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                : null}
+
               {exp.skills ? (
-                <p style={{ fontSize: 12.5 }}>
-                  <strong>Skills:</strong> {exp.skills.join(", ")}
+                <p style={{ marginTop: 4 }}>
+                  <strong style={{ color: "var(--r-ink)" }}>Skills:</strong>{" "}
+                  {exp.skills.join(", ")}
                 </p>
               ) : null}
             </div>
@@ -115,9 +178,9 @@ export function ResumeDoc() {
 
         {/* skills */}
         <section>
-          <h2>Skills</h2>
+          <h2>Skills &amp; Tooling</h2>
           {skillCategories.map((cat) => (
-            <p key={cat.title} style={{ margin: "3px 0", fontSize: 12.5 }}>
+            <p key={cat.title} className="r-skill-row">
               <strong>{cat.title}:</strong> {cat.skills.join(", ")}
             </p>
           ))}
