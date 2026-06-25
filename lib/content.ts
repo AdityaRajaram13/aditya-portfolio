@@ -81,6 +81,14 @@ export const experiences: Experience[] = [
         ],
       },
       {
+        title: "Payment Microservice",
+        points: [
+          "Built a dedicated payment microservice around Razorpay's Partner API, implementing a platform model where each client company links their own Razorpay account under the platform and all order creation and payment collection flows through it on their behalf.",
+          "Handled per-merchant payment routing — orders and payment links are created against the correct linked account, keeping revenue, settlements, and reporting isolated per client.",
+          "Tracked payment lifecycle (created → captured → failed) with status reconciliation against invoices, ensuring billing records stay consistent with Razorpay's state.",
+        ],
+      },
+      {
         title: "Infrastructure & DevOps",
         points: [
           "Architected a microservices system using RabbitMQ for asynchronous, decoupled inter-service communication.",
@@ -92,9 +100,9 @@ export const experiences: Experience[] = [
         title: "Integrations & Frontend",
         points: [
           "Integrated the WhatsApp Business API so customers can generate invoices/proformas and place orders inside WhatsApp; built the email + WhatsApp notification services behind it.",
-          "Integrated Razorpay's Partner API, letting client companies onboard their own Razorpay accounts for independent payment collection.",
           "Built a bank-statement reconciliation pipeline (Excel import, debit/credit reconciliation, XML output for accounting/ERP).",
-          "Built and maintained Next.js apps (SSR, reusable components, SEO) and led an Angular upgrade (v19 → v22) across three releases, adopting Signal Forms and zoneless change detection.",
+          "Built and maintained Next.js apps across both the App Router (React Server Components, Server Actions) and Pages Router (getServerSideProps), selecting the right rendering model per feature.",
+          "Led an Angular upgrade (v19 → v22) across three releases, migrating to standalone components, adopting Signal Forms and zoneless change detection, and refactoring lazy-loaded routing to align with the new architecture.",
         ],
       },
       {
@@ -156,7 +164,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Frontend",
-    skills: ["Next.js", "React", "Angular", "Tailwind CSS", "Server-side rendering", "HTML & CSS"],
+    skills: ["Next.js", "React", "Angular", "Tailwind CSS", "Server-side rendering", "React Server Components", "HTML & CSS"],
   },
   {
     title: "Backend",
@@ -237,6 +245,12 @@ export const projects: Project[] = [
     blurb:
       "Asynchronous, decoupled inter-service communication via RabbitMQ, containerized with Docker and deployed on Docker Swarm after a pragmatic migration off Kubernetes.",
     tags: ["RabbitMQ", "Docker Swarm", "Microservices"],
+  },
+  {
+    title: "payment-microservice",
+    blurb:
+      "A platform-model payment service built on Razorpay's Partner API — client companies link their own Razorpay accounts, and the service handles order creation, payment collection, and status reconciliation on their behalf.",
+    tags: ["Razorpay Partner API", "Microservices", "Payment orchestration", "Node.js"],
   },
 ];
 
