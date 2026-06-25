@@ -64,6 +64,7 @@ export const experiences: Experience[] = [
         title: "Core Development",
         points: [
           "Designed and implemented automated GST (Goods and Services Tax) reporting within a Node.js/Express backend, handling accurate tax computation and report generation for a multi-location billing system.",
+          "Integrated a third-party GST search API for real-time GSTIN lookup and taxpayer validation within the billing flow.",
           "Built a vector/embedding-based search system for HSN (Harmonized System Nomenclature) code matching, improving accuracy and speed of product-to-tax-code classification over traditional keyword lookup.",
           "Used Redis for caching across payment and high-traffic read paths to reduce response latency.",
         ],
@@ -84,6 +85,7 @@ export const experiences: Experience[] = [
         points: [
           "Architected a microservices system using RabbitMQ for asynchronous, decoupled inter-service communication.",
           "Containerized services with Docker; deployed initially on Kubernetes, then led a pragmatic migration to Docker Swarm once K8s overhead exceeded the product's actual scaling needs.",
+          "Built ETL pipelines using Apache NiFi for data ingestion, transformation, and routing across services.",
         ],
       },
       {
@@ -100,6 +102,7 @@ export const experiences: Experience[] = [
         points: [
           "Leading backend development for the company's kiosk product line, owning the full backend implementation.",
           "Designed and delivered a structured backend learning curriculum to transition manual QA testers into backend development roles.",
+          "Built custom Claude AI skills and agentic coding workflows (Claude Code) to streamline repetitive development tasks and accelerate the team's delivery cadence.",
         ],
       },
     ],
@@ -153,23 +156,39 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Frontend",
-    skills: ["Next.js", "React", "Angular", "Server-side rendering", "HTML & CSS"],
+    skills: ["Next.js", "React", "Angular", "Tailwind CSS", "Server-side rendering", "HTML & CSS"],
   },
   {
     title: "Backend",
-    skills: ["Node.js", "Express", "GraphQL (Apollo)", "REST APIs", "RabbitMQ"],
+    skills: ["Node.js", "Express", "GraphQL (Apollo)", "REST APIs", "RabbitMQ", "gRPC", "Nginx"],
   },
   {
     title: "Data",
-    skills: ["PostgreSQL", "Sequelize", "MongoDB", "Redis", "Vector / Embedding search"],
+    skills: ["PostgreSQL", "Sequelize", "MongoDB", "Redis", "Vector / Embedding search", "Apache NiFi"],
   },
   {
     title: "Infra & DevOps",
-    skills: ["Docker", "Docker Swarm", "Kubernetes", "Microservices"],
+    skills: ["Docker", "Docker Swarm", "Kubernetes", "Microservices", "AWS", "CI/CD (GitHub Actions)"],
   },
   {
     title: "Integrations",
-    skills: ["Razorpay Partner API", "WhatsApp Business API", "GST / Tax reporting", "ERP / Bank reconciliation"],
+    skills: [
+      "Razorpay Partner API",
+      "WhatsApp Business API",
+      "GST / Tax reporting",
+      "GST Search API",
+      "ERP / Bank reconciliation",
+      "Payment orchestration",
+    ],
+  },
+  {
+    title: "AI & Tooling",
+    skills: [
+      "Claude Code",
+      "Prompt engineering",
+      "Custom AI skills / workflows",
+      "AI-assisted development",
+    ],
   },
 ];
 
